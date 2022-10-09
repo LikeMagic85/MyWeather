@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-android-extensions'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -28,11 +30,27 @@ android {
         it.buildConfigField "String", "WEATHER_API_KEY", apiKey
     }
 
+    signingConfigs {
+        myRelease {
+            Properties properties = new Properties()
+            properties.load(rootProject.file("password.properties").newDataInputStream())
+            def password = properties.getProperty("password") // FIXME
+            // def password = "123456"
+
+            storeFile file("MyKeys.jks")
+            storePassword = password
+            keyAlias 'MyWeather'
+            keyPassword =password
+        }
+    }
+
 
     buildTypes {
         release {
-            minifyEnabled false
+            signingConfig signingConfigs.myRelease
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            multiDexEnabled true
         }
     }
     compileOptions {
@@ -45,9 +63,25 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.code.gson:gson:2.8.5'
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation platform('com.google.firebase:firebase-bom:30.2.0')
+    implementation "androidx.work:work-runtime-ktx:2.7.1"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.0.8'
+    apply plugin: 'kotlin-kapt'
+    implementation 'androidx.room:room-runtime:2.4.3'
+    kapt 'androidx.room:room-compiler:2.4.3'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.10'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+    implementation 'io.coil-kt:coil:1.4.0'
+    implementation 'io.coil-kt:coil-svg:1.3.2'
+    implementation 'com.google.code.gson:gson:2.9.1'
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.5.0'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'

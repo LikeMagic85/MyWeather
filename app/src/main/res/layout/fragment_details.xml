@@ -6,24 +6,42 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:clickable="true"
-    tools:context=".view.WeatherListFragment">
+    tools:context=".view.historyweatherlist.HistoryWeatherListFragment"
+    android:focusable="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_view"
+        android:padding="@dimen/default_padding"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/headerCityIcon"
+            android:layout_width="match_parent"
+            android:scaleType="fitXY"
+            android:layout_height="@dimen/town_header_height"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:scaleType="centerInside"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/headerCityIcon"
+            />
 
         <TextView
             android:id="@+id/city_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/city_name_margin_top"
             android:layout_marginBottom="15dp"
             android:textSize="35sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/icon"
             tools:text="Москва" />
 
         <TextView
@@ -36,6 +54,28 @@
             tools:text="lt/ln: 55.755826, 37.6172999 " />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/timeLabel"
+            app:layout_constraintTop_toBottomOf="@id/city_coordinates"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="@dimen/margin_15_dp"
+            android:text="@string/time"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/timeValue"
+            app:layout_constraintTop_toBottomOf="@id/timeLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="@dimen/margin_15_dp"
+            android:textSize="@dimen/city_text_size"
+            tools:text="00:00"/>
+
+
+        <TextView
             android:id="@+id/temperature_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,7 +83,7 @@
             android:text="@string/temperature_label"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/city_coordinates" />
+            app:layout_constraintTop_toBottomOf="@id/timeValue" />
 
         <TextView
             android:id="@+id/temperature_value"
@@ -87,6 +127,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
+        android:background="#70000000"
         tools:visibility="visible">
 
         <ProgressBar

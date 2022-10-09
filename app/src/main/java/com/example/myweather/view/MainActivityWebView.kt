@@ -2,16 +2,13 @@ package com.example.myweather.view
 
 import android.annotation.SuppressLint
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.annotation.RequiresApi
-import com.example.myweather.R
+import androidx.appcompat.app.AppCompatActivity
 import com.example.myweather.databinding.ActivityMainWebviewBinding
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import java.net.HttpURLConnection
 import java.net.URL
-import java.util.stream.Collector
 import java.util.stream.Collectors
 import javax.net.ssl.HttpsURLConnection
 
